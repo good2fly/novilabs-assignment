@@ -17,6 +17,10 @@ import java.io.Writer;
 import java.util.*;
 import java.util.stream.IntStream;
 
+/**
+ * The main CSV processor that reads, parses and processes the input, and writes out
+ * the result. Used the Univocity CSV parser under the hood for fast processing.
+ */
 public class CsvProcessor {
 
     private final static Logger LOG = LoggerFactory.getLogger(CsvProcessor.class);

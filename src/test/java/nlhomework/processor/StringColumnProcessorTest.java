@@ -6,29 +6,21 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class DecimalColumnProcessorTest {
+public class StringColumnProcessorTest {
 
-    private DecimalColumnProcessor processor;
+    private StringColumnProcessor processor;
 
     @BeforeEach
     void setUp() {
-        processor = new DecimalColumnProcessor();
+        processor = new StringColumnProcessor();
     }
 
     @Test
     void testProcessValidDecimal() {
-        String[] row1 = { "40.55" };
-        String[] row2 = { "43.45" };
+        String[] row1 = { "foobar" };
+        String[] row2 = { "" };
         assertEquals(row1[0], processor.processColumn(0, 0, row1));
         assertEquals(row2[0], processor.processColumn(1, 0, row2));
-        assertEquals("42.0", processor.getReplacementValue());
-    }
-
-    @Test
-    void testProcessInvalidValue() {
-        String[] row = { "abc" };
-        String result = processor.processColumn(0, 0, row);
-        assertNull(result);
     }
 
     @Test
@@ -38,3 +30,4 @@ public class DecimalColumnProcessorTest {
         assertNull(result);
     }
 }
+    
