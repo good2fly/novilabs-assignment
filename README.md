@@ -88,4 +88,4 @@ produced in `out-dir/foo-out.csv`
 
 ## Bonus Assignments
 
-I am still working on this, but I definitely would like to finish it before the next interview.
+[See in this repository.](https://github.com/good2fly/novilabs-bonus-assignment)
