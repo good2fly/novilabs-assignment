@@ -1,7 +1,7 @@
 package nlhomework.processor;
 
 import nlhomework.CsvFileProcessorApp;
-import nlhomework.io.StringReaderWriterFactory;
+import nlhomework.io.StringCsvReaderAndWriterFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -161,10 +161,8 @@ public class CsvProcessorTest {
 
     private void processAndVerifyOutput(String input, String expected) throws IOException {
 
-        var f = new StringReaderWriterFactory(input, sb -> output = sb);
-        try (var r = f.buildReader(); var w = f.buildWriter()) {
-            csvProcessor.process(r, w);
-        }
+        var f = new StringCsvReaderAndWriterFactory(input, sb -> output = sb);
+        csvProcessor.process(f, f);
         assertEquals(expected, output.toString());
     }
 }

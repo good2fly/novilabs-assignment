@@ -6,6 +6,7 @@ import java.io.Reader;
 /**
  * Produce a {@link Reader} instance.
  */
-public interface ReaderFactory {
+@FunctionalInterface
+public interface CsvReaderFactory {
     Reader buildReader() throws IOException;
 }

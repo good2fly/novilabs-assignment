@@ -6,6 +6,7 @@ import java.io.Writer;
 /**
  * Produce a {@link Writer} instance.
  */
-public interface WriterFactory {
+@FunctionalInterface
+public interface CsvWriterFactory {
     Writer buildWriter() throws IOException;
 }

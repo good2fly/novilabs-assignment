@@ -1,18 +1,21 @@
 package nlhomework.io;
 
 import java.io.*;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
- * Implementation of the {@link ReaderFactory} and {@link WriterFactory} interfaces that creates
+ * Implementation of the {@link CsvReaderFactory} and {@link CsvWriterFactory} interfaces that creates
  * readers and writers that read from and write to strings, respectively.
  */
-public class StringReaderWriterFactory implements ReaderFactory, WriterFactory {
+public class StringCsvReaderAndWriterFactory implements CsvReaderFactory, CsvWriterFactory {
 
     private final String inputString;
     private final Consumer<StringBuffer> outputStringConsumer;
 
-    public StringReaderWriterFactory(String inputString, Consumer<StringBuffer> outputStringConsumer) {
+    public StringCsvReaderAndWriterFactory(String inputString, Consumer<StringBuffer> outputStringConsumer) {
+        Objects.requireNonNull(inputString, "inputString must not be null");
+
         this.inputString = inputString;
         this.outputStringConsumer = outputStringConsumer;
     }
@@ -25,7 +28,7 @@ public class StringReaderWriterFactory implements ReaderFactory, WriterFactory {
     @Override
     public Writer buildWriter() throws IOException {
         var writer = new StringWriter();
-        outputStringConsumer.accept(writer.getBuffer());
+        if (outputStringConsumer != null) outputStringConsumer.accept(writer.getBuffer());
         return writer;
     }
 }

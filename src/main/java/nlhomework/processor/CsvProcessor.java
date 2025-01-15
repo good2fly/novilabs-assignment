@@ -9,9 +9,12 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import com.univocity.parsers.csv.CsvWriter;
 import com.univocity.parsers.csv.CsvWriterSettings;
 import nlhomework.ColumnDataType;
+import nlhomework.io.CsvReaderFactory;
+import nlhomework.io.CsvWriterFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.*;
@@ -40,21 +43,23 @@ public class CsvProcessor {
     /**
      * Perform the processing of the input CSV and write the processed result into the output as CSV.
      *
-     * @param inputReader The input reader. Required
-     * @param outputWriter The output write. Required.
+     * @param readerFactory producer of {@link Reader} objects to read the input CSV. Required.
+     * @param writerFactory producer of {@link Reader} objects to read the input CSV. Required.
      */
-    public void process(Reader inputReader, Writer outputWriter) {
+    public void process(CsvReaderFactory readerFactory, CsvWriterFactory writerFactory) throws IOException {
 
-        Objects.requireNonNull(inputReader, "inputReader must not be null");
-        Objects.requireNonNull(outputWriter, "outputWriter must not be null");
+        Objects.requireNonNull(readerFactory, "readerFactory must not be null");
+        Objects.requireNonNull(writerFactory, "writerFactory must not be null");
 
-        CustomRowListProcessor rowProcessor = new CustomRowListProcessor(columnsConfig);
-        CsvParser csvParser = createParser(rowProcessor);
-        CsvWriter csvWriter = createWriter(outputWriter);
-        csvParser.parse(inputReader);
-        csvWriter.writeHeaders((csvParser.getContext().headers()));
-        List<Object[]> result = rowProcessor.getOutputRowsAsObjArray();
-        csvWriter.writeRowsAndClose(result);
+        try (var inputReader = readerFactory.buildReader(); var outputWriter = writerFactory.buildWriter()) {
+            CustomRowListProcessor rowProcessor = new CustomRowListProcessor(columnsConfig);
+            CsvParser csvParser = createParser(rowProcessor);
+            CsvWriter csvWriter = createWriter(outputWriter);
+            csvParser.parse(inputReader);
+            csvWriter.writeHeaders((csvParser.getContext().headers()));
+            List<Object[]> result = rowProcessor.getOutputRowsAsObjArray();
+            csvWriter.writeRows(result);
+        }
     }
 
     /**

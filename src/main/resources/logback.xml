@@ -1,4 +1,11 @@
 <configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <appender name="file" class="ch.qos.logback.core.FileAppender">
         <!-- TODO this can be made more fancy for prod (e.g. rollover, size limits, etc.) -->
         <file>nl-home-assignment.log</file>
@@ -9,6 +16,7 @@
     </appender>
 
     <root level="debug">
+        <appender-ref ref="STDOUT" />
         <appender-ref ref="file" />
     </root>
 </configuration>

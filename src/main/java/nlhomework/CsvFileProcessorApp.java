@@ -1,10 +1,9 @@
 package nlhomework;
 
-import nlhomework.io.FileReaderWriterFactory;
+import nlhomework.io.FileCsvReaderAndWriterFactory;
 import nlhomework.processor.CsvProcessor;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 public class CsvFileProcessorApp {
@@ -25,15 +24,13 @@ public class CsvFileProcessorApp {
      */
     public static void main(String[] args) throws IOException {
 
-        String inputFileName = args.length > 0 ? args[0] : DEFAULT_INPUT_FILE_NAME;
-        String outputFileName = args.length > 1 ? args[1] : DEFAULT_OUTPUT_FILE_NAME;
+        var inputFileName = args.length > 0 ? args[0] : DEFAULT_INPUT_FILE_NAME;
+        var outputFileName = args.length > 1 ? args[1] : DEFAULT_OUTPUT_FILE_NAME;
 
-        var ioFactory = new FileReaderWriterFactory(inputFileName, outputFileName);
-        try(var reader = ioFactory.buildReader(); var writer = ioFactory.buildWriter()) {
-            var processor = new CsvProcessor(buildDefaultColumnsConfig());
-            processor.process(reader, writer);
-            System.out.println(outputFileName);
-        }
+        var ioFactory = new FileCsvReaderAndWriterFactory(inputFileName, outputFileName);
+        var processor = new CsvProcessor(buildDefaultColumnsConfig());
+        processor.process(ioFactory, ioFactory);
+        System.out.println(outputFileName);
     }
 
     /**
@@ -44,7 +41,7 @@ public class CsvFileProcessorApp {
      * @return
      */
     public static List<ColumnDataType> buildDefaultColumnsConfig() {
-        return Arrays.asList(
+        return List.of(
                 ColumnDataType.ID,
                 ColumnDataType.DECIMAL,
                 ColumnDataType.INTEGER,
@@ -56,5 +53,4 @@ public class CsvFileProcessorApp {
                 ColumnDataType.CATEGORY
         );
     }
-
 }

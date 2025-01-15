@@ -1,18 +1,17 @@
 package nlhomework.io;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 
 /**
- * Implementation of the {@link ReaderFactory} and {@link WriterFactory} interfaces that creates
+ * Implementation of the {@link CsvReaderFactory} and {@link CsvWriterFactory} interfaces that creates
  * readers and writers that read from and write to files, respectively.
  */
-public class FileReaderWriterFactory implements ReaderFactory, WriterFactory {
+public class FileCsvReaderAndWriterFactory implements CsvReaderFactory, CsvWriterFactory {
 
     private final String inputFileName;
     private final String outputFileName;
 
-    public FileReaderWriterFactory(String inputFileName, String outputFileName) {
+    public FileCsvReaderAndWriterFactory(String inputFileName, String outputFileName) {
         this.inputFileName = inputFileName;
         this.outputFileName = outputFileName;
     }
