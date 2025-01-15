@@ -89,3 +89,10 @@ produced in `out-dir/foo-out.csv`
 ## Bonus Assignments
 
 [See in this repository.](https://github.com/good2fly/novilabs-bonus-assignment)
+
+### Lambda
+In addition to the 'regular' bonus assignment, I have also added a Lambda-based solution, as it seemed more in
+line with the task at hand. The same JAR file can be used as Lambda, and it can be triggered by uploading CSV
+files into the `novilabs-homework-lambda-bucket`'s `input` folder. The resulting CSV is then stored in the `output`
+folder.
+
